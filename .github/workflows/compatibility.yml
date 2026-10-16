@@ -1,0 +1,57 @@
+name: Compatibility
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  matrix:
+    name: PHP ${{ matrix.php }} / Laravel ${{ matrix.laravel }} / ${{ matrix.dependencies }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { php: '8.2', laravel: '12', testbench: '10', dependencies: current, experimental: false }
+          - { php: '8.2', laravel: '12', testbench: '10', dependencies: minimum, experimental: false }
+          - { php: '8.4', laravel: '12', testbench: '10', dependencies: current, experimental: false }
+          - { php: '8.4', laravel: '13', testbench: '11', dependencies: current, experimental: false }
+          - { php: '8.4', laravel: '13', testbench: '11', dependencies: minimum, experimental: false }
+          - { php: '8.3', laravel: '12', testbench: '10', dependencies: current, experimental: true }
+          - { php: '8.3', laravel: '13', testbench: '11', dependencies: current, experimental: true }
+          - { php: '8.5', laravel: '12', testbench: '10', dependencies: current, experimental: true }
+          - { php: '8.5', laravel: '13', testbench: '11', dependencies: current, experimental: true }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: shivammathur/setup-php@d52fc211a0436f8839a587b3b5b8efddab4744ea # v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+      - name: Select framework major
+        run: |
+          composer require --no-update illuminate/database:^${{ matrix.laravel }}.0 illuminate/support:^${{ matrix.laravel }}.0
+          composer require --dev --no-update orchestra/testbench:^${{ matrix.testbench }}.0
+      - name: Resolve current dependencies
+        if: matrix.dependencies == 'current'
+        run: composer update --with-all-dependencies --no-interaction --no-progress
+      - name: Resolve minimum dependencies
+        if: matrix.dependencies == 'minimum'
+        run: composer update --with-all-dependencies --prefer-lowest --prefer-stable --no-interaction --no-progress
+      - name: Confirm platform
+        run: composer check-platform-reqs --no-dev
+      - name: Audit resolved dependencies
+        run: composer audit --locked
+      - name: PHPUnit
+        run: composer test
+      - name: Larastan and PHPStan
+        run: composer analyse
+      - name: PSR-12
+        run: composer test:style

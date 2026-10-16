@@ -1,0 +1,37 @@
+name: Quality
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: shivammathur/setup-php@d52fc211a0436f8839a587b3b5b8efddab4744ea # v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+      - name: Validate package metadata
+        run: composer validate --strict --no-check-publish
+      - name: Resolve Laravel 12 toolchain
+        run: |
+          composer require --no-update illuminate/database:^12.0 illuminate/support:^12.0
+          composer require --dev --no-update orchestra/testbench:^10.0
+          composer update --with-all-dependencies --no-interaction --no-progress
+      - name: Audit resolved dependencies
+        run: composer audit --locked
+      - name: PHPUnit
+        run: composer test
+      - name: Larastan and PHPStan
+        run: composer analyse
+      - name: PSR-12
+        run: composer test:style

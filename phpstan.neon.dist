@@ -1,0 +1,11 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: 8
+    # Public PHPDoc input types are validated at runtime, not assumed trustworthy.
+    treatPhpDocTypesAsCertain: false
+    paths:
+        - src
+        - tests
+    tmpDir: .phpstan.cache
