@@ -9,7 +9,7 @@ Use this checklist only after the blockers in `release-readiness.md` are closed.
 | REL-001 | Resolved (was Critical) | The owner approved MIT; `LICENSE` names LZK Tools and Composer declares `MIT`. | Distribution rights for the Free package are explicit. | Preserve the notice in every source and archive distribution. | No |
 | REL-002 | Resolved (was High) | README now follows the current facade/configuration API and documentation tests parse PHP examples and verify references. | The obsolete onboarding conflict is removed. | Keep examples executable as the API evolves. | No |
 | REL-003 | High | Local PHP 8.2/8.4, Laravel 12/13, current/minimum and SQLite rows pass, but no CI workflow, PHP 8.3/8.5, PostgreSQL or MySQL execution exists. | Release quality still depends on one workstation and database engine. | Automate the executed rows, add the missing runtimes and isolated database services, and preserve artifacts/results. | **Yes for broad support claims** |
-| REL-004 | Partially resolved (High) | `SECURITY.md` documents policy and limitations, but no monitored private contact is configured. | Reporting expectations exist; private submission remains unavailable. | Owner must publish a real monitored private channel. | **Yes** |
+| REL-004 | Resolved locally; publication verification pending (High) | `SECURITY.md` identifies `lzktools@gmail.com` as the private reporting contact, and mailbox reception was verified on 2026-10-16. | A private email reporting channel is available; the updated policy is not yet published on GitHub. | Publish the updated policy and verify the contact is visible and correct. | **Pending verification** |
 | REL-005 | Resolved for local candidate (was Medium) | Git and Composer exclusions are defined. The first local archive exposed `vendor/` and `composer.lock`; explicit Composer exclusions fixed it, and the regenerated 62-file archive passed required/forbidden file checks. | The prepared archive surface is explicit and locally verified. | Repeat archive inspection from the future clean Git release candidate. | No |
 | REL-006 | Medium | Changelog has phase-based Unreleased content but no version/date section. | Consumers cannot map changes to an immutable release. | Convert final entries to a versioned, dated section and comparison links when a remote exists. | Yes at release time |
 
@@ -25,7 +25,8 @@ Use this checklist only after the blockers in `release-readiness.md` are closed.
 
 - [x] Add standard MIT `LICENSE` naming LZK Tools and Composer `license: MIT`.
 - [x] Add `SECURITY.md` and a provisional support table.
-- [ ] Configure and publish a monitored private security contact.
+- [x] Configure and verify a monitored private security contact (`lzktools@gmail.com`).
+- [ ] Publish the updated `SECURITY.md` on GitHub and verify the reporting instructions.
 - [x] Rewrite README around the current recommended API and operational requirements.
 - [x] Mark advanced/provisional namespaces in `docs/public-api.md`.
 - [x] Parse README PHP examples and verify document references in `DocumentationTest`.

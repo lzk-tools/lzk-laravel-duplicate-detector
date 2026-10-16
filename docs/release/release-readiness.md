@@ -16,7 +16,7 @@ The technical base is sound: exact and fuzzy engines are separate, blocking is e
 | RR-004 | Resolved (was High) | Phase 3C.2A adds finite exact `max_candidates` (default 1000), remaining-sized keyset pages, examined-candidate counting, and terminal partial metadata. | Exact work is bounded; reaching the ceiling can omit later duplicates. | Keep the limit explicit, blocking selective/indexed, and inspect terminal completeness. | No |
 | RR-005 | Partially resolved (High) | PHP 8.2/Laravel 12 and PHP 8.4/Laravel 12-13 pass on SQLite with current and minimum dependency resolutions. PHP 8.3/8.5 were unavailable. PostgreSQL 16 is reachable but lacks isolated credentials; MySQL is absent. | SQLite evidence is substantially broader, while the full declared runtime range and non-SQLite semantics remain unverified. | Add PHP 8.3/8.5 and isolated PostgreSQL/MySQL CI rows before broad compatibility claims. | **Yes for broad compatibility and PostgreSQL/MySQL claims** |
 | RR-006 | High | Unknown configuration keys are not consistently rejected. Failures use generic SPL exceptions and iterable failures may occur only during iteration. | Typos may silently disable intent; error handling has no stable package taxonomy. | Before 1.0, define strict keys, error timing, and package exceptions; treat messages as non-contractual. | No for an explicit 0.x preview; **yes for 1.0** |
-| RR-007 | Partially resolved (High) | `SECURITY.md` now documents no supported releases, coordinated disclosure, report contents, trust boundaries and consumer duties, but explicitly records that no private channel exists. | Expectations are clearer, yet reporters still cannot submit details privately. | Owner must configure a real monitored private channel and update `SECURITY.md` before publication. | **Yes** |
+| RR-007 | Resolved locally; publication verification pending (High) | `SECURITY.md` identifies `lzktools@gmail.com` as the private security reporting contact. Email reception was verified on 2026-10-16. GitHub repository and remote exist. | A private email reporting channel is available; GitHub Private Vulnerability Reporting remains disabled. | Verify the updated policy is published on GitHub and that the contact is monitored. | **Pending verification** |
 | RR-008 | Partially resolved (Medium) | Quality and compatibility workflows plus a manual release guide now exist, but no GitHub repository or workflow run exists and the changelog remains Unreleased. | Local definitions improve reproducibility but provide no hosted execution evidence. | Run required workflows after a repository exists and create a dated version section only for the approved release candidate. | No after hosted evidence and release process are established |
 | RR-009 | Medium | Complete installation knowledge is split across README, configuration docs, and the demo. Canonical-column lifecycle and indexes are essential for correct use. | README-only onboarding does not reliably reach a safe configuration. | Include one complete configuration and common errors in the README. | Covered by RR-002 |
 | RR-010 | Resolved for current lock (Low) | `composer audit --locked` reports no advisories and runtime licenses are MIT, BSD-3-Clause, Apache-2.0, or permissive alternatives. The root package is MIT. | Current dependency metadata is compatible with the selected Free license but changes over time. | Repeat audit and license inventory for every release. | No |
@@ -119,3 +119,26 @@ baselines, and advanced API stabilization before 1.0.
 The recommendation remains to postpone publication until publication blockers are
 closed. Even after publication, production suitability must be evaluated separately
 against the production-support blockers and documented package limits.
+
+## Phase 3C.5 security reporting update — 2026-10-16
+
+RR-007 has progressed since the 2026-10-09 assessment.
+
+The GitHub repository now exists at
+https://github.com/lzk-tools/lzk-laravel-duplicate-detector
+and the initial release-candidate commit (`4aac07c`) has been pushed
+to `origin/main`.
+
+The owner designated `lzktools@gmail.com` as the private security
+reporting contact and verified that the mailbox receives messages.
+
+`SECURITY.md` has been updated locally to document this channel.
+GitHub Private Vulnerability Reporting remains disabled.
+
+The remaining RR-007 verification step is to publish the updated
+security policy to GitHub and confirm that the reporting address
+is visible and correct.
+
+Other release blockers and compatibility requirements remain subject
+to separate verification.
+

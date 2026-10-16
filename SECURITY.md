@@ -2,24 +2,27 @@
 
 ## Current status
 
-The package has no published release and no configured private vulnerability reporting channel. **Do not send vulnerability details, credentials, personal
-data, database dumps, or exploit material to an invented address or public issue.**
+There are currently no published or supported releases.
 
-A monitored private channel must be selected and published by the owner before
-the first public distribution. Until that exists, the release-readiness security
-finding remains unresolved. This file will be updated with the real channel; no
-email address, repository feature, or service is implied today.
+Security vulnerabilities can be reported privately to:
 
-## Planned GitHub private reporting channel
+**lzktools@gmail.com**
 
-When a real GitHub repository exists, an administrator should open **Settings →
-Code security and analysis**, enable **Private vulnerability reporting**, and
-verify that the repository Security tab exposes a private report flow. Repository
-creation alone does not enable or verify this feature.
+The package maintainer verified that this mailbox receives messages
+on 2026-10-16.
 
-Until that verification is completed and this policy links to the real repository
-channel, RR-007 remains unresolved. Public issues must not be used for vulnerability
-details.
+Do not report security vulnerabilities through public GitHub issues.
+
+## Private vulnerability reporting
+
+Send suspected security vulnerabilities to **lzktools@gmail.com**.
+
+GitHub Private Vulnerability Reporting is not currently enabled.
+Email is the designated private reporting channel.
+
+Maintainers will coordinate vulnerability assessment and disclosure
+with reporters before publishing sensitive details.
+
 ## Supported versions
 
 There are currently no published or supported versions.
@@ -32,9 +35,12 @@ There are currently no published or supported versions.
 When releases exist, this table will identify maintained lines explicitly.
 Users must not infer support from Composer constraints alone.
 
-## How to report after a private channel is configured
+## How to report a security vulnerability
 
-Use only the private channel named in this file at that time. Include:
+To report a suspected security vulnerability, send a private email to
+**lzktools@gmail.com**.
+
+Include the following information when available:
 
 - affected package version or immutable commit identifier;
 - PHP, Laravel, database engine, and relevant configuration;
