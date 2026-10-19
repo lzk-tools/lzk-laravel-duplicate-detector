@@ -13,11 +13,16 @@ final class ServiceProviderTest extends TestCase
 {
     public function testProviderBootsWithoutADatabase(): void
     {
-        self::assertNotNull($this->app);
-        self::assertTrue($this->app->isBooted());
+       $app = $this->app;
+
+        if ($app === null) {
+            self::fail('Laravel application was not initialized.');
+        }
+
+        self::assertTrue($app->isBooted());
         self::assertInstanceOf(
             DuplicateDetectorServiceProvider::class,
-            $this->app->getProvider(DuplicateDetectorServiceProvider::class),
+            $app->getProvider(DuplicateDetectorServiceProvider::class),
         );
         self::assertSame([], config('database.connections'));
         self::assertSame([], config('duplicate-detector.models'));
