@@ -72,12 +72,30 @@ final class DocumentationTest extends TestCase
         yield 'release readiness' => ['docs/release/release-readiness.md'];
     }
 
-    public function testSecurityPolicyDoesNotInventAReportingChannel(): void
+    public function testSecurityPolicyHasPrivateReportingChannel(): void
     {
         $policy = file_get_contents(self::ROOT . '/SECURITY.md');
+
         self::assertIsString($policy);
-        self::assertStringContainsString('no configured private vulnerability reporting channel', $policy);
-        self::assertStringContainsString('must be selected and published by the owner', $policy);
-        self::assertDoesNotMatchRegularExpression('/mailto:|security@/i', $policy);
+
+        self::assertStringContainsString(
+            'lzktools@gmail.com',
+            $policy
+        );
+
+        self::assertStringContainsString(
+            'Email is the designated private reporting channel.',
+            $policy
+        );
+
+        self::assertStringContainsString(
+            'Do not report security vulnerabilities through public GitHub issues.',
+            $policy
+        );
+
+        self::assertStringNotContainsString(
+            'no configured private vulnerability reporting channel',
+            $policy
+        );
     }
 }
