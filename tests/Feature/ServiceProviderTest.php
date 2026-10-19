@@ -13,7 +13,7 @@ final class ServiceProviderTest extends TestCase
 {
     public function testProviderBootsWithoutADatabase(): void
     {
-       $app = $this->app;
+        $app = $this->app;
 
         if ($app === null) {
             self::fail('Laravel application was not initialized.');
